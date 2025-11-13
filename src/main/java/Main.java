@@ -20,6 +20,14 @@ public class Main {
       String path = parts[1];
       if (path.equals("/")) {
         out.write("HTTP/1.1 200 OK\r\n\r\n");
+      } else if (path.startsWith("/echo/")) {
+        String message = path.substring(6);
+        int length = message.length();
+        out.write("HTTP/1.1 200 OK\r\n");
+        out.write("Content-Type: text/plain\r\n");
+        out.write("Content-Length: " + length + "\r\n");
+        out.write("\r\n");
+        out.write(message);
       } else {
         out.write("HTTP/1.1 404 Not Found\r\n\r\n");
       }
