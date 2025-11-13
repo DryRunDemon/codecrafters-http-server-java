@@ -16,9 +16,14 @@ public class Main {
       BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
       String line = in.readLine();
       System.out.println("Received request: " + line);
-      out.write("HTTP/1.1 200 OK\r\n\r\n");
+      String[] parts = line.split(" ");
+      String path = parts[1];
+      if (path.equals("/")) {
+        out.write("HTTP/1.1 200 OK\r\n\r\n");
+      } else {
+        out.write("HTTP/1.1 404 Not Found\r\n\r\n");
+      }
       out.flush();
-
       clientSocket.close();
     }
   }
